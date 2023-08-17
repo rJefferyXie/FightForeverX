@@ -25,3 +25,22 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+@layer components {
+  .hero-image {
+    @apply rounded-md;
+  }
+
+  .animated-move-right {
+    @apply moveRight;
+  }
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
