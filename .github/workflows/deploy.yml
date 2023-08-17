@@ -8,6 +8,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Change Directory
+        run: cd app
+
       - name: Checkout
         uses: actions/checkout@master     
       

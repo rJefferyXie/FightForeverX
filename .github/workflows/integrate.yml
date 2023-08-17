@@ -8,6 +8,9 @@ jobs:
   test_pull_request:
     runs-on: ubuntu-latest
     steps: 
+      - name: Change Directory
+        run: cd app
+
       - name: Checkout
         uses: actions/checkout@v3      
       
