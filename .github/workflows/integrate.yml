@@ -7,10 +7,12 @@ on:
 jobs:
   test_pull_request:
     runs-on: ubuntu-latest
-    steps: 
-      - name: Change Directory
-        run: cd app
 
+    defaults:
+      run:
+       working-directory: ./app
+
+    steps: 
       - name: Checkout
         uses: actions/checkout@v3      
       
