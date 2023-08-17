@@ -22,4 +22,4 @@ _Disclaimer: This project is not affiliated with any specific wrestling promotio
 * https://wallpaperaccess.com/download/wwe-desktop-1077066
 * https://wallpaperaccess.com/download/njpw-9478886
 * https://wallpaperaccess.com/download/kenny-omega-3976735
-* https://wallpaperaccess.com/download/kenny-omega-3976754
+* https://wallpapercave.com/w/wp11833663
