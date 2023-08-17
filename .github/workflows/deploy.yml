@@ -1,0 +1,37 @@
+name: Firebase Continuous Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master     
+      
+      - name: Install Node.js
+        uses: actions/setup-node@master
+        with:
+          node-version: 16 
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.0.1
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build and export
+        run: pnpm build
+
+      - name: Deploy to firebase hosting
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env: 
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
