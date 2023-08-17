@@ -10,7 +10,7 @@ jobs:
 
     defaults:
       run:
-       working-directory: ./app
+        working-directory: ./app
 
     steps:
       - name: Checkout
@@ -37,6 +37,8 @@ jobs:
       - name: Deploy to firebase hosting
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting
+          args: 
+            cd app
+            deploy --only hosting
         env: 
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
