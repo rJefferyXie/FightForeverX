@@ -15,3 +15,6 @@ Welcome to FightForeverX, your one-stop destination for all things wrestling! Di
 Whether you're a dedicated wrestling aficionado or a curious newcomer, WrestleHub is your gateway to the heart-pounding excitement and drama that defines this captivating sport. Join us on this exhilarating journey and become a true insider in the world of wrestling!
 
 _Disclaimer: This project is not affiliated with any specific wrestling promotion and is intended purely for entertainment and informational purposes._
+
+## Sources:
+* https://www.allelitewrestling.com/
