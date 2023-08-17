@@ -8,10 +8,6 @@ jobs:
   test_pull_request:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-       working-directory: ./app
-
     steps: 
       - name: Checkout
         uses: actions/checkout@v3      
@@ -29,10 +25,14 @@ jobs:
           run_install: false
 
       - name: Install dependencies
-        run: pnpm install
+        run: |
+          cd ./app
+          pnpm install
 
       - name: Build and export
-        run: pnpm build
+        run: |
+          cd ./app
+          pnpm build
 
       # - name: Run all automated tests
       #   uses: cypress-io/github-action@v4
