@@ -18,8 +18,9 @@ _Disclaimer: This project is not affiliated with any specific wrestling promotio
 
 ## Sources:
 * https://www.allelitewrestling.com/
-* https://wallpaperaccess.com/download/aew-1978407
-* https://wallpaperaccess.com/download/wwe-desktop-1077066
-* https://wallpaperaccess.com/download/njpw-9478886
-* https://wallpaperaccess.com/download/kenny-omega-3976735
-* https://wallpapercave.com/w/wp11833663
+* [AEW Logo](https://wallpaperaccess.com/download/aew-1978407)
+* [WWE Logo](https://wallpapercave.com/w/wp7670891)
+* [NJPW Logo](https://wallpaperaccess.com/download/njpw-9478886)
+* [Kenny Omega](https://wallpaperaccess.com/download/kenny-omega-3976735)
+* [Sasha Banks and Naomi](https://wallpapercave.com/w/wp11833663)
+* [Shinsuke Nakamura](https://wallpaperset.com/wall/eyJpdiI6IktuWTc0MnVvbFdRRDBOMzZ4TCtiZXc9PSIsInZhbHVlIjoiM1NVUWw1VmpcLzAzdEljNTk3RnE3OFE9PSIsIm1hYyI6IjJhZWZiZjE1NDI1YjUwN2U4MDdmOThmODA4ZTM4ZjdlODM5NjFmMmMwNDM5MjkyNTY0NzZhOThlMTJiZWIxMjAifQ==)
