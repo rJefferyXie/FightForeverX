@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  font-size: 16px;
+  font-family: Verdana, sans-serif;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer components {
+  .wrestler {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    width: 210px;
+    height: 210px;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 3px 3px 8px rgb(0, 0, 0, 27%);    
+    cursor: pointer;
+  }
+
+  .wrestler:hover:before, .wrestler:active:before, .wrestler:focus:before {
+    content: "";
+    height: 150%;
+    width: 150%;
+    position: absolute;
+    left: -25%;
+    top: -25%;
+    animation: rotate 1.5s infinite linear;
+  }
+
+  .wrestler.blue:hover:before, .wrestler.blue:active:before, .wrestler.blue:focus:before {
+    background-image: conic-gradient(
+      #04b0ee 20deg, 
+      transparent 120deg
+    );
+  }
+
+  .wrestler.darkblue:hover:before, .wrestler.darkblue:active:before, .wrestler.darkblue:focus:before {
+    background-image: conic-gradient(
+      #0462ee 20deg, 
+      transparent 120deg
+    );
+  }
+
+  .wrestler.orange:hover:before, .wrestler.orange:active:before, .wrestler.orange:focus:before {
+    background-image: conic-gradient(
+      #ee8104 20deg, 
+      transparent 120deg
+    );
+  }
+
+  .wrestler.green:hover:before, .wrestler.green:active:before, .wrestler.green:focus:before {
+    background-image: conic-gradient(
+      #04ee52 20deg, 
+      transparent 120deg
+    );
+  }
+
+  .wrestler.red:hover:before, .wrestler.red:active:before, .wrestler.red:focus:before {
+    background-image: conic-gradient(
+      #ee0404 20deg, 
+      transparent 120deg
+    );
+  }
+
+  .wrestler.purple:hover:before, .wrestler.purple:active:before, .wrestler.purple:focus:before {
+    background-image: conic-gradient(
+      #7d04ee 20deg, 
+      transparent 120deg
+    );
+  }
+
+  .wrestler.black:hover:before, .wrestler.black:active:before, .wrestler.black:focus:before {
+    background-image: conic-gradient(
+      #000000 20deg, 
+      transparent 120deg
+    );
+  }
+
+@keyframes rotate {
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+  .wrestler-name {
+    position: absolute;
+  }
+
+  .wrestler-image {
+    object-fit: cover;
+    margin: auto;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    filter: grayscale(50%);
+    transition: filter 600ms ease-in-out;
+    border-radius: 3px;
+  }
+
+  .wrestler-image:hover {
+    filter: grayscale(0%);
+  }
+}
