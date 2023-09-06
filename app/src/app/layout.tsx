@@ -1,5 +1,5 @@
 // Styles
-import './globals.css';
+import './globals.scss';
 
 // React + Next
 import type { Metadata } from 'next';
