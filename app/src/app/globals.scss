@@ -37,8 +37,8 @@ body {
     display: flex;
     flex-direction: column;
     margin: 1rem;
-    width: 210px;
-    height: 210px;
+    width: 240px;
+    height: 240px;
     position: relative;
     border-radius: 4px;
     overflow: hidden;
@@ -111,18 +111,32 @@ body {
   }
 }
 
-  .wrestler-name {
+  .wrestler-name-container {
     position: absolute;
+    z-index: 1;
+    bottom: 1px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 0.5rem;
+    height: 3.5rem;
+    margin: auto;
+    width: calc(100% - 2px);
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .wrestler-name {
+      font-weight: bold;
+      font-size: large;
+    }
   }
 
   .wrestler-image {
     object-fit: cover;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
     margin: auto;
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
     filter: grayscale(50%);
     transition: filter 600ms ease-in-out;
-    border-radius: 3px;
+    border-radius: 4px;
   }
 
   .wrestler-image:hover {
