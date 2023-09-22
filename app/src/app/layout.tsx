@@ -10,11 +10,6 @@ import Navbar from '@/components/navbar';
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'Fight Forever',
-  description: 'Welcome to FightForeverX, your one-stop destination for all things wrestling! Dive into the electrifying world of professional wrestling with our comprehensive platform that offers a wealth of information on your favourite wrestlers, their captivating statistics, upcoming pay-per-view events, and the latest wrestling news.',
-}
-
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
