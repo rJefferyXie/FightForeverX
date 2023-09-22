@@ -90,7 +90,7 @@ def uploadArticle(newsArticle, company):
 
   print('Started uploading ' + sanitizedURL)
 
-  articleRef = db.collection("articles").document(company).collection(sanitizedURL).document()
+  articleRef = db.collection(company + "articles").document(sanitizedURL)
   articleRef.set(newsArticle)
 
   print("Finished uploading " + sanitizedURL)
