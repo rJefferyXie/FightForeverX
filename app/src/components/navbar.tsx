@@ -1,7 +1,10 @@
+"use client"
+
 // Styles
 import '../styles/navbar.scss';
 
 // React + Next
+import { useRouter } from 'next/navigation';
 
 // MUI
 import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
@@ -9,10 +12,12 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 
 const Navbar = () => {
+  const router = useRouter();
+
   const navLinks = [
     {
       name: "FIGHT FOREVER",
-      href: "",
+      href: "/",
       icon: <AllInclusiveIcon></AllInclusiveIcon>
     },
     {
@@ -35,18 +40,22 @@ const Navbar = () => {
     // }
   ]
 
+  const navigate = (destination: string) => {
+    router.push(destination);
+  }
+
   return (
     <nav className="nav z-50">
       {navLinks.map((link, idx) => {
         return (
-          <a 
+          <div
             key={idx}
-            href={link.href}
+            onClick={() => navigate(link.href)}
             className="nav-link"
           >
             <p className="nav-link-icon">{link.icon}</p>
             <p className="nav-link-text">{link.name}</p>
-          </a>
+          </div>
         )
       })}
     </nav>
