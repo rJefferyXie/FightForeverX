@@ -22,7 +22,11 @@ def getArticleData():
     {
       'company': 'aew',
       'url': 'https://www.wrestlinginc.com/category/aew-news/'
-    } 
+    },
+    {
+      'company': 'njpw',
+      'url': 'https://www.wrestlinginc.com/category/njpw-news/'
+    }
   ]
   
   browser = webdriver.Firefox()
