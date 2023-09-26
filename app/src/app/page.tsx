@@ -3,12 +3,17 @@
 // React + Next
 import { useEffect, useState } from 'react';
 
+// Animations
+import { motion, AnimatePresence } from "framer-motion";
+import fadeDown from '@/animations/fade-down';
+
 // Firebase
 import { db } from '@/firebase/config';
 import { collection, getDocs } from "firebase/firestore"; 
 
 const Home = () => {
   const [articles, setArticles] = useState<any>([]);
+  const [currentArticle, setCurrentArticle] = useState();
 
   useEffect(() => {
     const getData = async () => {
@@ -29,45 +34,81 @@ const Home = () => {
     getData();
   }, []);
 
-  const renderText = (articleIdx: number) => {
-    const article = articles[articleIdx];
+  const renderText = (text: any, article: any) => {
+    if (!text || !text.length) return;
 
-    article.text = article.text.map((text: string, idx: number) => {
-      if (text === "\n") {
-        return <br key={idx}></br>
+    return Object.keys(article.links).map((key: string) => {
+      if (text.includes(key)) {
+        const words = text.split(key);
+        const link = (
+          <a 
+            href={article.links[key]} 
+            style={{color: "blue"}} 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            {key}
+          </a>
+        );
+        words.splice(1, 0, link);
+        return words;
       }
-
-      if (!text || !text.length) return;
-
-      Object.keys(article.links).map((key: string) => {
-        if (text.includes(key)) {
-          console.log(key, article.links[key]);
-        }
-      });
-      
-      const words = text.split(" ");
-      const replacedWords = words.map((word, index) => {
-        const link = Object.keys(article.links).find(link => link === word);
-    
-        if (link) {
-          return (
-            <a key={index} href={article.links[link]} target="_blank" rel="noopener noreferrer">
-              {word}
-            </a>
-          );
-        }
-        return word;
-      });
-
-      return replacedWords.join(" ");
-    })
-
-    return article.text;
+    });
   }
 
   return (
     <div className="flex flex-col overflow-y-auto h-full w-screen bg-zinc-50 sm:ml-20 sm:p-4">
-      <div className="flex">
+      {currentArticle &&
+        <div className="fixed flex h-full w-full m-auto left-0 right-0 top-0 z-50 bg-black bg-opacity-50">
+          <AnimatePresence>
+            {currentArticle && 
+              <motion.div
+                className="h-full sm:h-5/6 w-full sm:w-10/12 m-auto bg-neutral-50 text-black"
+                key="modal" 
+                initial="hidden" 
+                animate="visible" 
+                exit="exit"
+                variants={fadeDown}
+              >
+                <div className="flex flex-col overflow-hidden">
+                  <img
+                    className="w-1/3 mx-auto my-2 sm:rounded-t-md"
+                    src={currentArticle.image}
+                    alt={currentArticle.title}
+                  />
+
+                  <p className="font-semibold mx-2 sm:mt-1">
+                    {currentArticle.title}
+                  </p>
+
+                  <p className="mx-2 mb-2">
+                    {currentArticle.text.map((text: string, idx: number) => {
+                      return (
+                        <p className="my-2" key={idx}>
+                          {renderText(text, currentArticle)}
+                        </p>
+                      )
+                    })}  
+                  </p>
+
+                  <div className="flex justify-center mt-auto mb-1">
+                    <a
+                      className="px-2 py-1 mx-2 rounded-md bg-zinc-700 text-white hover:bg-zinc-600 duration-200 ease-in-out"
+                      href={currentArticle.links.homeRef}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      Visit Source
+                    </a>
+                  </div>
+                </div>              
+              </motion.div>
+            }
+          </AnimatePresence>
+        </div>
+      }
+
+      <div className="flex mx-auto my-4">
         <button
           className="px-2 py-1 mx-1 rounded-md text-white bg-neutral-500"
         >
@@ -87,7 +128,7 @@ const Home = () => {
         </button>
       </div>
 
-      <main className="flex flex-wrap justify-center sm:w-9/12 mx-auto my-16">
+      <main className="flex flex-wrap justify-center sm:w-9/12 mx-auto mb-16">
         {
           articles.length && 
             articles.map((article: any, idx: number) => {
@@ -107,13 +148,21 @@ const Home = () => {
                       {article.title}
                     </p>
 
+
                     <p className="hidden sm:line-clamp-4 mx-2 mb-2">
-                      {renderText(idx)}
+                      {article.text.map((text: string, idx: number) => {
+                        return (
+                          <p key={idx}>
+                            {renderText(text, article)}
+                          </p>
+                        )
+                      })}                    
                     </p>
 
                     <div className="flex justify-center mt-auto mb-1">
                       <button 
                         className="px-2 py-1 mx-2 rounded-md bg-sky-700 text-white hover:bg-sky-600 duration-200 ease-in-out"
+                        onClick={() => setCurrentArticle(article)}
                       >
                         Read More
                       </button>
