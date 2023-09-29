@@ -31,6 +31,10 @@ def getArticleData():
   
   browser = webdriver.Firefox()
   for url in urls:
+    oldArticles = db.collection(url['company'] + "articles").list_documents()
+    for art in oldArticles:
+      art.delete()
+
     browser.get(url['url'])
     time.sleep(1)
 
@@ -45,7 +49,6 @@ def getArticleURLs(browser):
   html = browser.page_source
   soup = bs(html, "lxml")
   articles = soup.find_all('div', class_='read-more')
-  print(len(articles))
 
   articleURLs = []
   for article in articles:
@@ -66,12 +69,13 @@ def parseArticle(browser, url):
   newsArticle["title"] = browser.find_element(By.CLASS_NAME, 'title-gallery').text
   newsArticle["image"] = browser.find_element(By.CLASS_NAME, 'gallery-image').get_attribute('src')
   newsArticle["date"] = browser.find_element(By.CSS_SELECTOR, 'time').text
+  newsArticle["author"] = browser.find_element(By.CLASS_NAME, 'byline-author').text
+  newsArticle["authorURL"] = browser.find_element(By.CLASS_NAME, 'byline-author').get_attribute('href')
+  newsArticle["homeURL"] = browser.current_url
 
   articleContent = soup.select_one(".columns-holder")
   articleText = []
   articleLinks = {}
-
-  articleLinks['homeRef'] = browser.current_url
 
   paragraphs = articleContent.find_all('p')
   for pg in paragraphs:
@@ -89,7 +93,7 @@ def parseArticle(browser, url):
   return newsArticle
 
 def uploadArticle(newsArticle, company):
-  originalURL = newsArticle['links']['homeRef'].split('/')
+  originalURL = newsArticle['homeURL'].split('/')
   sanitizedURL = originalURL[-2]
 
   print('Started uploading ' + sanitizedURL)
