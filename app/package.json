@@ -14,6 +14,7 @@
     "@heroicons/react": "^2.0.18",
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.14.7",
+    "@reduxjs/toolkit": "^1.9.6",
     "@types/node": "20.5.0",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
@@ -29,6 +30,9 @@
     "postcss": "8.4.28",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
     "sass": "^1.66.1",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6"
