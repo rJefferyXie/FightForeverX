@@ -45,13 +45,13 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="nav z-50">
+    <nav className="nav z-40">
       {navLinks.map((link, idx) => {
         return (
           <div
             key={idx}
             onClick={() => navigate(link.href)}
-            className="nav-link"
+            className="nav-link cursor-pointer"
           >
             <p className="nav-link-icon">{link.icon}</p>
             <p className="nav-link-text">{link.name}</p>
