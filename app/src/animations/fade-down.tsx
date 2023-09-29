@@ -3,7 +3,7 @@ const fadeDown = {
     y: "-10vh",
     opacity: 0,
     transition: {
-      duration: 0.25
+      duration: 0.5
     }
   },
   visible: {
@@ -11,10 +11,10 @@ const fadeDown = {
     opacity: 1
   },
   exit: {
-    y: '10vw',
+    y: '10vh',
     opacity: 0,
     transition: {
-      duration: 0.25
+      duration: 0.5
     }
   }
 }
