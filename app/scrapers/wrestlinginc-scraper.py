@@ -39,11 +39,25 @@ def getArticleData():
     time.sleep(1)
 
     articleURLs = getArticleURLs(browser)
-    for articleURL in articleURLs:
+    articlePreviews = getArticlePreviews(browser)
+    for idx, articleURL in enumerate(articleURLs):
       article = parseArticle(browser, articleURL)
+      article['preview'] = articlePreviews[idx]
       uploadArticle(article, url['company'])
 
   browser.close()
+
+def getArticlePreviews(browser):
+  html = browser.page_source
+  soup = bs(html, "lxml")
+  articles = soup.find_all('div', class_='article-preview')
+
+  articlePreviews = []
+  for article in articles:
+    preview = article.get_text()
+    articlePreviews.append(preview)
+
+  return articlePreviews
 
 def getArticleURLs(browser):
   html = browser.page_source

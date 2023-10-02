@@ -8,6 +8,7 @@ interface Article {
   image: string,
   author: string,
   authorURL: string,
+  preview: string,
   homeURL: string,
   links: Link[],
   text: any[]
