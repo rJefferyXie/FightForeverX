@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 import os
 import firebase_admin
 from firebase_admin import credentials, firestore
+import random
 
 current_dir = os.path.dirname(__file__)
 json_path = os.path.join(current_dir, "../src/fightforeverx-firebase-adminsdk.json")
@@ -40,11 +41,19 @@ def getArticleData():
 
     articleURLs = getArticleURLs(browser)
     articlePreviews = getArticlePreviews(browser)
-    for idx, articleURL in enumerate(articleURLs):
+
+    articleOrder = 1
+    while articleURLs:
+      idx = random.randint(0, len(articleURLs) - 1)
+      articleURL = articleURLs.pop(idx)
       article = parseArticle(browser, articleURL)
       article['preview'] = articlePreviews[idx]
+      article['order'] = articleOrder
+      articleOrder += 1
       uploadArticle(article, url['company'])
-
+    
+    print("--- Finished Uploading " + str(len(articlePreviews)) + " Articles For " + url['company'].upper() + " ---")
+    
   browser.close()
 
 def getArticlePreviews(browser):
