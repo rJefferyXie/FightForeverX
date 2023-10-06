@@ -8,6 +8,11 @@ import { Inter } from 'next/font/google';
 // Components
 import Navbar from '@/components/navbar';
 
+// Redux
+import { PersistGate } from 'redux-persist/integration/react';
+import { wrapper, store, persistor } from "../store/store";
+import { Provider } from "react-redux";
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -17,15 +22,19 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="flex">
-          <Navbar></Navbar>
-          {children}
-        </div>
-      </body>
-    </html>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <html lang="en">
+          <body className={inter.className}>
+            <div className="flex">
+              <Navbar></Navbar>
+              {children}
+            </div>
+          </body>
+        </html>
+      </PersistGate>
+    </Provider>
   )
 }
 
-export default RootLayout;
+export default wrapper.withRedux(RootLayout);
