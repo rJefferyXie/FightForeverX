@@ -43,12 +43,10 @@ def getArticleData():
     articlePreviews = getArticlePreviews(browser)
 
     articleOrder = 1
-    while articleURLs:
-      idx = random.randint(0, len(articleURLs) - 1)
-      articleURL = articleURLs.pop(idx)
+    for idx, articleURL in enumerate(articleURLs):
       article = parseArticle(browser, articleURL)
       article['preview'] = articlePreviews[idx]
-      article['order'] = articleOrder
+      article['order'] = idx
       articleOrder += 1
       uploadArticle(article, url['company'])
     
