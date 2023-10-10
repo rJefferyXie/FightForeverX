@@ -24,6 +24,7 @@ const Home = () => {
   const [WWEArticles, setWWEArticles] = useState<Article[]>([]);
   const [AEWArticles, setAEWArticles] = useState<Article[]>([]);
   const [NJPWArticles, setNJPWArticles] = useState<Article[]>([]);
+  const [currentlyViewing, setCurrentlyViewing] = useState("");
 
   const [currentArticle, setCurrentArticle] = useState<Article>();
 
@@ -197,7 +198,7 @@ const Home = () => {
           className="flex flex-col w-full bg-white text-black my-4 drop-shadow-sm"
         >
           <p className="w-fit font-semibold mx-auto mt-2 text-2xl">AEW Articles</p>
-          <Articles articles={AEWArticles} setCurrentArticle={setCurrentArticle}></Articles>
+          <Articles articles={AEWArticles} setCurrentArticle={setCurrentArticle} viewingAll={currentlyViewing === "AEW"}></Articles>
           <p className="text-blue-900 w-fit ml-auto mr-2 my-2 cursor-pointer">View All...</p>
         </div>
 
@@ -205,7 +206,7 @@ const Home = () => {
           className="flex flex-col w-full bg-white text-black my-4 drop-shadow-sm"
         >
           <p className="w-fit font-semibold mx-auto mt-2 text-2xl">WWE Articles</p>
-          <Articles articles={WWEArticles} setCurrentArticle={setCurrentArticle}></Articles>
+          <Articles articles={WWEArticles} setCurrentArticle={setCurrentArticle} viewingAll={currentlyViewing === "WWE"}></Articles>
           <p className="text-blue-900 w-fit ml-auto mr-2 my-2 cursor-pointer">View All...</p>
         </div>
 
@@ -213,7 +214,7 @@ const Home = () => {
           className="flex flex-col w-full bg-white text-black my-4 drop-shadow-sm"
         >
           <p className="w-fit font-semibold mx-auto mt-2 text-2xl">NJPW Articles</p>
-          <Articles articles={NJPWArticles} setCurrentArticle={setCurrentArticle}></Articles>
+          <Articles articles={NJPWArticles} setCurrentArticle={setCurrentArticle} viewingAll={currentlyViewing === "NJPW"}></Articles>
           <p className="text-blue-900 w-fit ml-auto mr-2 my-2 cursor-pointer">View All...</p>
         </div>      
       </main>
