@@ -2,7 +2,7 @@ import beckylynch from '../../public/images/becky.jpg';
 import brittbaker from '../../public/images/britt.jpg';
 import charlotteflair from '../../public/images/charlotte.jpg';
 import cmpunk from '../../public/images/cmpunk.jpg';
-import ioshirai from '../../public/images/ioshirai.jpg';
+import iyosky from '../../public/images/iyosky.jpg';
 import jeffhardy from '../../public/images/jeffhardy.jpg';
 import johnnygargano from '../../public/images/johnny.jpg';
 import kennyomega from '../../public/images/kennyomega.jpg';
@@ -61,16 +61,16 @@ const wrestlers = [
     color: "red"
   },
   {
-    name: "Io Shirai",
+    name: "Iyo Sky",
     nickname: "The Genius Of The Sky",
-    url: "ioshirai",
+    url: "iyosky",
     gender: "Female",
     weight: "121 lbs (55 kg)",
     height: `5' 1" (156 cm)`,
     hometown: "Kamakura, Kanagawa, Japan",
-    social: "https://twitter.com/Shirai_Io",
-    image: ioshirai.src,
-    color: "purple"
+    social: "https://twitter.com/Iyo_SkyWWE",
+    image: iyosky.src,
+    color: "purple",
   },
   {
     name: "Jeff Hardy",
