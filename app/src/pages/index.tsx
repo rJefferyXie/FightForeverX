@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 // MUI
 import { ClickAwayListener } from '@mui/material';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,10 +22,13 @@ import { db } from '@/firebase/config';
 import { collection, getDocs, query, orderBy } from "firebase/firestore"; 
 
 const Home = () => {
+  const [showingFilters, setShowingFilters] = useState(false);
+  const [filters, setFilters] = useState(["AEW", "WWE", "NJPW"]);
+
   const [WWEArticles, setWWEArticles] = useState<Article[]>([]);
   const [AEWArticles, setAEWArticles] = useState<Article[]>([]);
   const [NJPWArticles, setNJPWArticles] = useState<Article[]>([]);
-  const [currentlyViewing, setCurrentlyViewing] = useState("");
+  const [activeArticles, setActiveArticles] = useState<Article[]>([]);
 
   const [currentArticle, setCurrentArticle] = useState<Article>();
 
@@ -32,15 +36,15 @@ const Home = () => {
     const getData = async () => {
       const articleMap = [
         {
-          company: 'wwearticles',
+          company: 'wwe',
           callback: setWWEArticles
         },
         {
-          company: 'aewarticles',
+          company: 'aew',
           callback: setAEWArticles
         },
         {
-          company: 'njpwarticles',
+          company: 'njpw',
           callback: setNJPWArticles
         },
       ]
@@ -49,14 +53,15 @@ const Home = () => {
         articleMap.map(async (article) => {
           const wrestlerArticles: Article[] = [];
 
-          const articleRef = collection(db, article.company);
+          const articleRef = collection(db, article.company + "articles");
           const querySnapshot = await getDocs(query(articleRef, orderBy("order", "asc")));
           querySnapshot.forEach((doc) => {
-            const article = doc.data() as Article;
-            article.text = article.text.map((text: string) => {
-              return renderText(text, article);
+            const newsArticle = doc.data() as Article;
+            newsArticle.company = article.company;
+            newsArticle.text = newsArticle.text.map((text: string) => {
+              return renderText(text, newsArticle);
             });
-            wrestlerArticles.push(article);
+            wrestlerArticles.push(newsArticle);
           });
   
           article.callback(wrestlerArticles);
@@ -68,6 +73,45 @@ const Home = () => {
 
     getData();
   }, []);
+
+  useEffect(() => {
+    const combineArraysInOrder = (arrays: Article[][]) => {
+      const combinedArray = [];
+  
+      for (let i = 0; i < 27; i++) {
+        for (const arr of arrays) {
+          if (i < arr.length) {
+            combinedArray.push(arr[i]);
+          }
+        }
+      }
+    
+      return combinedArray;
+    }
+
+    const activeArrays: Article[][] = [];
+    if (filters.includes('AEW')) {
+      activeArrays.push(AEWArticles)
+    }
+
+    if (filters.includes('WWE')) {
+      activeArrays.push(WWEArticles)
+    }
+
+    if (filters.includes('NJPW')) {
+      activeArrays.push(NJPWArticles)
+    }
+
+    setActiveArticles(combineArraysInOrder(activeArrays));
+  }, [AEWArticles, WWEArticles, NJPWArticles, filters]);
+
+  const updateFilters = (filter: string) => {
+    if (filters.includes(filter)) {
+      setFilters(filters.filter(f => f !== filter));
+    } else {
+      setFilters(filters => [...filters, filter]);
+    }
+  }
 
   const renderText = (text: any, article: any) => {
     if (!text || !text.length) return;
@@ -193,30 +237,62 @@ const Home = () => {
         </div>
       }
 
-      <main className="flex flex-col items-center sm:w-10/12 mx-auto mb-16">
-        <div
-          className="flex flex-col w-full bg-white text-black my-4 drop-shadow-sm"
+      <main className="flex flex-col md:w-[87rem] text-black mx-auto mb-16">
+        <h1 className="font-semibold text-xl my-2 mx-auto">ARTICLES</h1>
+
+        <div 
+          className="flex text-black bg-white w-fit my-2 ml-auto mr-2 py-2 px-4 rounded-3xl drop-shadow-sm cursor-pointer"
+          onClick={() => setShowingFilters(!showingFilters)}
         >
-          <p className="w-fit font-semibold mx-auto mt-2 text-2xl">AEW Articles</p>
-          <Articles articles={AEWArticles} setCurrentArticle={setCurrentArticle} viewingAll={currentlyViewing === "AEW"}></Articles>
-          <p className="text-blue-900 w-fit ml-auto mr-2 my-2 cursor-pointer">View All...</p>
+          <FilterListIcon 
+            className="text-black mr-2"
+          />
+          <p>Filters</p>
         </div>
 
-        <div
-          className="flex flex-col w-full bg-white text-black my-4 drop-shadow-sm"
+        <div 
+          className="flex flex-col justify-evenly bg-white text-white overflow-hidden px-4 my-2 mx-2 rounded-md drop-shadow-sm duration-300 transition-transform"
+          style={{
+            height: showingFilters ? '8.5rem' : '0',
+            transitionProperty: 'height'
+          }}
         >
-          <p className="w-fit font-semibold mx-auto mt-2 text-2xl">WWE Articles</p>
-          <Articles articles={WWEArticles} setCurrentArticle={setCurrentArticle} viewingAll={currentlyViewing === "WWE"}></Articles>
-          <p className="text-blue-900 w-fit ml-auto mr-2 my-2 cursor-pointer">View All...</p>
+          
+          <div
+            className="flex px-2 py-1 w-52 my-1 rounded-lg cursor-pointer bg-zinc-700"
+            onClick={() => updateFilters("AEW")}
+          >
+            <div 
+              className="mr-2 my-auto rounded-full bg-white w-4 h-4 transition-colors duration-300 ease-in-out"
+              style={{backgroundColor: filters.includes('AEW') ? '#10b981' : '#e11d48'}}
+            />
+            Show AEW Articles
+          </div>
+
+          <div
+            className="flex px-2 py-1 w-52 my-1 rounded-lg cursor-pointer bg-zinc-700"
+            onClick={() => updateFilters("WWE")}
+          >
+            <div 
+              className="mr-2 my-auto rounded-full bg-white w-4 h-4 transition-colors duration-300 ease-in-out"
+              style={{backgroundColor: filters.includes('WWE') ? '#10b981' : '#e11d48'}}
+            />            
+            Show WWE Articles
+          </div>
+
+          <div
+            className="flex px-2 py-1 w-52 my-1 rounded-lg cursor-pointer bg-zinc-700"
+            onClick={() => updateFilters("NJPW")}
+          >
+            <div 
+              className="mr-2 my-auto rounded-full bg-white w-4 h-4 transition-colors duration-300 ease-in-out"
+              style={{backgroundColor: filters.includes('NJPW') ? '#10b981' : '#e11d48'}}
+            />            
+            Show NJPW Articles
+          </div>
         </div>
 
-        <div
-          className="flex flex-col w-full bg-white text-black my-4 drop-shadow-sm"
-        >
-          <p className="w-fit font-semibold mx-auto mt-2 text-2xl">NJPW Articles</p>
-          <Articles articles={NJPWArticles} setCurrentArticle={setCurrentArticle} viewingAll={currentlyViewing === "NJPW"}></Articles>
-          <p className="text-blue-900 w-fit ml-auto mr-2 my-2 cursor-pointer">View All...</p>
-        </div>      
+        <Articles articles={activeArticles} setCurrentArticle={setCurrentArticle}></Articles>
       </main>
     </div>
   )
