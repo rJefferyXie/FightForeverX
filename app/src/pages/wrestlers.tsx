@@ -29,7 +29,7 @@ const Wrestlers = () => {
   }
 
   return (
-    <main className="flex flex-wrap content-center justify-center h-full sm:h-screen w-screen bg-zinc-50 sm:ml-20 sm:p-4">
+    <main className="flex flex-wrap overflow-hidden content-center justify-center h-full sm:h-screen w-screen bg-zinc-50 sm:ml-20 sm:p-4">
       {wrestlers.map((wrestler, idx) => {
         return (
           <div 
