@@ -1,4 +1,3 @@
-import time
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -14,9 +13,53 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 wrestlers = {
+  "Becky Lynch": {
+    "wrestlerURL": "beckylynch",
+    "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=1784&bild=1&details=11"
+  },
+  "Britt Baker": {
+    "wrestlerURL": "brittbaker",
+    "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=30393&bild=1&details=11"
+  },
+  "Charlotte Flair": {
+    "wrestlerURL": "charlotteflair",
+    "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=23814&bild=1&details=11"
+  },
+  "CM Punk": {
+    "wrestlerURL": "cmpunk",
+    "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=313&bild=1&details=11"
+  },
   "IYO SKY": {
     "wrestlerURL": "iyosky",
     "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=15571&bild=1&details=11"
+  },
+  "Jeff Hardy": {
+    "wrestlerURL": "jeffhardy",
+    "matchesURL" : "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=37&bild=1&details=11"
+  },
+  "Johnny Gargano": {
+    "wrestlerURL": "johnnygargano",
+    "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=4363&bild=1&details=11"
+  },
+  "Kenny Omega": {
+    "wrestlerURL": "kennyomega",
+    "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=1533&bild=1&details=11"
+  },
+  "Ruby Soho": {
+    "wrestlerURL": "rubysoho",
+    "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=21468&bild=1&details=11"
+  },
+  "Mercedes Moné": {
+    "wrestlerURL": "sashabanks",
+    "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=21110&bild=1&details=11"
+  },
+  "Shinsuke Nakamura": {
+    "wrestlerURL": "shinsukenakamura",
+    "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=515&bild=1&details=11"
+  },
+  "Tommaso Ciampa": {
+    "wrestlerURL": "tommasociampa",
+    "matchesURL": "https://www.wrestlingdata.com/index.php?befehl=bios&wrestler=6309&bild=1&details=11"
   }
 }
 
@@ -33,6 +76,11 @@ def getMatches(browser, wrestlerName):
       wonMatch = False
       if matchData[2].find(wrestlerName) < matchData[2].find("defeated"):
         wonMatch = True
+      
+      # edge case for her since she has matches with both names in last 10
+      if wrestlerName == "Mercedes Moné" and "Sasha Banks" in matchData[2]:
+        if matchData[2].find("Sasha Banks") < matchData[2].find("defeated"):
+          wonMatch = True
 
       match = {
         "eventName": matchData[0],
