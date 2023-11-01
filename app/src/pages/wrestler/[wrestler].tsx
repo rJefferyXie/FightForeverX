@@ -9,7 +9,7 @@ import WrestlerActions from '@/store/actions/wrestlerActions';
 
 // Firebase
 import { db } from '@/firebase/config';
-import { collection, doc, getDocs, query, orderBy } from "firebase/firestore"; 
+import { collection, doc, getDocs } from "firebase/firestore"; 
 
 const Wrestler = () => {
   const [matches, setMatches] = useState<any[]>([]);
