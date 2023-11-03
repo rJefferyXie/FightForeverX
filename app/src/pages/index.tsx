@@ -4,15 +4,12 @@
 import { useEffect, useState } from 'react';
 
 // MUI
-import { ClickAwayListener } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
-
-// Animations
-import { motion, AnimatePresence } from "framer-motion";
-import fadeDown from '@/animations/fade-down';
 
 // Components
 import Articles from '@/components/articles';
+import ArticleView from '@/components/articleView';
+import ArticleFilter from '@/components/articleFilter';
 
 // Interfaces
 import Article from '@/interfaces/article';
@@ -163,83 +160,16 @@ const Home = () => {
 
   return (
     <div className="flex flex-col overflow-y-auto h-screen w-screen bg-zinc-50 lg:ml-20 sm:p-4">
-      {currentArticle &&
-        <div className="fixed flex h-full w-full m-auto left-0 right-0 top-0 z-40 bg-black bg-opacity-75">
-          <AnimatePresence>
-            {currentArticle && 
-              <ClickAwayListener onClickAway={() => setCurrentArticle(undefined)}>
-                <motion.div
-                  className="flex flex-col h-full sm:h-[36rem] w-full sm:w-[64rem] m-auto p-4 bg-zinc-50 text-black overflow-auto rounded-md drop-shadow-md z-50"
-                  key="modal" 
-                  initial="hidden" 
-                  animate="visible" 
-                  exit="exit"
-                  variants={fadeDown}
-                >
-                  <img
-                    className="w-2/3 mx-auto my-2 sm:rounded-md"
-                    src={currentArticle.image}
-                    alt={currentArticle.title}
-                  />
-
-                  <p className="font-semibold mx-auto sm:mt-1">
-                    {currentArticle.title}
-                  </p>
-
-
-                  <span className="flex mx-auto">
-                    <a 
-                      className="text-blue-900 w-fit" 
-                      href={currentArticle.authorURL} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      {currentArticle.author}
-                    </a>
-
-                    <p className="ml-1">
-                      {" / " + currentArticle.date}
-                    </p>
-                  </span>
-
-
-                  <p className="mx-2">
-                    {currentArticle.text.map((text: string, idx: number) => {
-                      return (
-                        <p className="my-3" key={idx}>
-                          {text}
-                        </p>
-                      )
-                    })}  
-                  </p>
-
-                  <div className="flex justify-center mt-auto mb-1">
-                    <button 
-                      className="bg-rose-600 text-white px-2 py-1 mx-2 rounded-md hover:bg-rose-500 duration-200 ease-in-out"
-                      onClick={() => setCurrentArticle(undefined)}
-                    >
-                      Exit Article
-                    </button>
-                    
-                    <a
-                      className="px-2 py-1 mx-2 rounded-md bg-zinc-700 text-white hover:bg-zinc-600 duration-200 ease-in-out"
-                      href={currentArticle.homeURL}
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      Visit Source
-                    </a>
-                  </div>
-                </motion.div>
-              </ClickAwayListener>
-            }
-          </AnimatePresence>
-        </div>
+      {currentArticle && 
+        <ArticleView 
+          currentArticle={currentArticle} 
+          setCurrentArticle={setCurrentArticle}
+        />
       }
 
       <main className="flex flex-col md:w-[87rem] text-black mx-auto mb-16">
         <h1 className="font-semibold text-xl my-2 mx-auto">ARTICLES</h1>
-
+        
         <div 
           className="flex text-black bg-white w-fit my-2 ml-auto mr-2 py-2 px-4 rounded-3xl drop-shadow-sm cursor-pointer"
           onClick={() => setShowingFilters(!showingFilters)}
@@ -257,39 +187,26 @@ const Home = () => {
             transitionProperty: 'height'
           }}
         >
-          
-          <div
-            className="flex px-2 py-1 w-52 my-1 rounded-lg cursor-pointer bg-zinc-700"
-            onClick={() => updateFilters("AEW")}
-          >
-            <div 
-              className="mr-2 my-auto rounded-full bg-white w-4 h-4 transition-colors duration-300 ease-in-out"
-              style={{backgroundColor: filters.includes('AEW') ? '#10b981' : '#e11d48'}}
-            />
-            Show AEW Articles
-          </div>
+          <ArticleFilter 
+            text={"Show AEW Articles"} 
+            company={"AEW"} 
+            filters={filters} 
+            updateFilters={updateFilters}
+          />
 
-          <div
-            className="flex px-2 py-1 w-52 my-1 rounded-lg cursor-pointer bg-zinc-700"
-            onClick={() => updateFilters("WWE")}
-          >
-            <div 
-              className="mr-2 my-auto rounded-full bg-white w-4 h-4 transition-colors duration-300 ease-in-out"
-              style={{backgroundColor: filters.includes('WWE') ? '#10b981' : '#e11d48'}}
-            />            
-            Show WWE Articles
-          </div>
+          <ArticleFilter 
+            text={"Show WWE Articles"} 
+            company={"WWE"} 
+            filters={filters} 
+            updateFilters={updateFilters}
+          />
 
-          <div
-            className="flex px-2 py-1 w-52 my-1 rounded-lg cursor-pointer bg-zinc-700"
-            onClick={() => updateFilters("NJPW")}
-          >
-            <div 
-              className="mr-2 my-auto rounded-full bg-white w-4 h-4 transition-colors duration-300 ease-in-out"
-              style={{backgroundColor: filters.includes('NJPW') ? '#10b981' : '#e11d48'}}
-            />            
-            Show NJPW Articles
-          </div>
+          <ArticleFilter 
+            text={"Show NJPW Articles"} 
+            company={"NJPW"} 
+            filters={filters} 
+            updateFilters={updateFilters}
+          />
         </div>
 
         <Articles articles={activeArticles} setCurrentArticle={setCurrentArticle}></Articles>
