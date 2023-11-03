@@ -20,9 +20,9 @@ const Articles = (props: React.PropsWithChildren<ArticlesProps>) => {
               key={idx}
               className="flex sm:flex-col overflow-hidden drop-shadow-sm text-black p-1.5 sm:p-0 sm:m-2 h-[7.5rem] sm:w-[28rem] sm:h-[28rem] sm:rounded-md bg-white shadow"
             >
-              <div className="w-40 sm:w-full relative">
+              <div className="w-2/3 sm:w-full relative">
                 <img
-                  className="cursor-pointer"
+                  className="cursor-pointer h-full"
                   onClick={() => setCurrentArticle(article)}
                   src={article.image}
                   alt={article.title}
@@ -47,7 +47,7 @@ const Articles = (props: React.PropsWithChildren<ArticlesProps>) => {
                 </div>
               </div>
 
-              <div className="flex flex-col h-full overflow-hidden">
+              <div className="flex flex-col h-full w-full overflow-hidden">
                 <p 
                   className="font-semibold mx-3 sm:mt-1 line-clamp-3 md:line-clamp-2 cursor-pointer"
                   onClick={() => setCurrentArticle(article)}
@@ -59,7 +59,7 @@ const Articles = (props: React.PropsWithChildren<ArticlesProps>) => {
                   {article.preview}                  
                 </p>
 
-                <div className="flex justify-center mt-auto mb-0.5 md:mb-3">
+                <div className="flex justify-center mt-auto mb-0.5 sm:mb-3">
                   <button 
                     className="px-2 py-1 mx-2 rounded-md bg-sky-700 text-white hover:bg-sky-600 duration-200 ease-in-out"
                     onClick={() => setCurrentArticle(article)}
