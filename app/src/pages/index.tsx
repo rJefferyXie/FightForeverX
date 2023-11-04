@@ -10,6 +10,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import Articles from '@/components/articles';
 import ArticleView from '@/components/articleView';
 import ArticleFilter from '@/components/articleFilter';
+import LoadingArticles from '@/components/loadingArticles';
 
 // Interfaces
 import Article from '@/interfaces/article';
@@ -22,6 +23,7 @@ const Home = () => {
   const [showingFilters, setShowingFilters] = useState(false);
   const [filters, setFilters] = useState(["AEW", "WWE", "NJPW"]);
 
+  const [isLoading, setIsLoading] = useState(true);
   const [WWEArticles, setWWEArticles] = useState<Article[]>([]);
   const [AEWArticles, setAEWArticles] = useState<Article[]>([]);
   const [NJPWArticles, setNJPWArticles] = useState<Article[]>([]);
@@ -100,6 +102,7 @@ const Home = () => {
     }
 
     setActiveArticles(combineArraysInOrder(activeArrays));
+    setIsLoading(false);
   }, [AEWArticles, WWEArticles, NJPWArticles, filters]);
 
   const updateFilters = (filter: string) => {
@@ -167,9 +170,9 @@ const Home = () => {
         />
       }
 
-      <main className="flex flex-col md:w-[87rem] text-black mx-auto mb-16">
+      <main className="flex flex-col w-full sm:w-[87rem] text-black mx-auto mb-16">
         <h1 className="font-semibold text-xl my-2 mx-auto">ARTICLES</h1>
-        
+
         <div 
           className="flex text-black bg-white w-fit my-2 ml-auto mr-2 py-2 px-4 rounded-3xl drop-shadow-sm cursor-pointer"
           onClick={() => setShowingFilters(!showingFilters)}
@@ -209,7 +212,13 @@ const Home = () => {
           />
         </div>
 
-        <Articles articles={activeArticles} setCurrentArticle={setCurrentArticle}></Articles>
+        {isLoading ? 
+          <LoadingArticles/> :
+          <Articles 
+            articles={activeArticles} 
+            setCurrentArticle={setCurrentArticle}
+          />
+        }
       </main>
     </div>
   )

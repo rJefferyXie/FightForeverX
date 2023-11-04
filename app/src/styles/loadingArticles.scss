@@ -1,0 +1,29 @@
+.skeleton-container {
+  width: 95% !important;
+  height: 180px !important;
+  margin: 4px;
+}
+
+.skeleton-background {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.skeleton-icon {
+  margin: auto !important;
+  width: 64px !important;
+  height: 64px !important;
+}
+
+.skeleton-text {
+  width: 90% !important;
+  margin: 1px auto !important;
+}
+
+@media screen and (min-width: 1024px) {
+  .skeleton-container {
+    width: 229.6px !important; 
+    height: 229.6px !important;
+    margin: 2px;
+  }
+}
