@@ -23,7 +23,6 @@ const Home = () => {
   const [showingFilters, setShowingFilters] = useState(false);
   const [filters, setFilters] = useState(["AEW", "WWE", "NJPW"]);
 
-  const [isLoading, setIsLoading] = useState(true);
   const [WWEArticles, setWWEArticles] = useState<Article[]>([]);
   const [AEWArticles, setAEWArticles] = useState<Article[]>([]);
   const [NJPWArticles, setNJPWArticles] = useState<Article[]>([]);
@@ -102,7 +101,6 @@ const Home = () => {
     }
 
     setActiveArticles(combineArraysInOrder(activeArrays));
-    setIsLoading(false);
   }, [AEWArticles, WWEArticles, NJPWArticles, filters]);
 
   const updateFilters = (filter: string) => {
@@ -212,7 +210,7 @@ const Home = () => {
           />
         </div>
 
-        {isLoading ? 
+        {!(AEWArticles.length && WWEArticles.length && NJPWArticles.length) ? 
           <LoadingArticles/> :
           <Articles 
             articles={activeArticles} 
