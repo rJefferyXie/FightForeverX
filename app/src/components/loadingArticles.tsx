@@ -14,9 +14,10 @@ const LoadingArticles = () => {
       </p>
 
       <div className="flex flex-wrap w-full justify-center">
-        {[...Array(15)].map(() => {
+        {[...Array(15)].map((_, idx: number) => {
           return (
             <div
+              key={idx}
               className="skeleton-container flex flex-col relative rounded-md overflow-hidden"
             >
               <Skeleton
@@ -25,9 +26,10 @@ const LoadingArticles = () => {
               />
 
               <div className="bg-neutral-300 p-2 w-full mt-auto mx-auto">
-                {[...Array(2)].map(() => {
+                {[...Array(2)].map((_, idx: number) => {
                   return (
                     <Skeleton 
+                      key={idx}
                       variant="text"
                       className="skeleton-text"
                     />
