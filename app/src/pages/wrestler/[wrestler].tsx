@@ -101,7 +101,7 @@ const Wrestler = () => {
             <div 
               key={idx} 
               className="w-3/5 outline outline-1 outline-gray-900 p-1 mx-auto text-white text-shadow"
-              style={{backgroundColor: match.wonMatch ? "green" : "red"}}
+              style={{backgroundColor: match.wonMatch ? "#0e7490" : "#b91c1c"}}
             >
               <p>
                 {match.eventName}
